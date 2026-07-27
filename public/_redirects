@@ -1,5 +1,0 @@
-# Cloudflare Pages SPA fallback.
-# Static assets and Pages Functions (/api/*) are matched first by Cloudflare,
-# so this rule only catches client-side routes (e.g. /shop, /admin, /admin/login)
-# and serves the single-page app so React Router can handle them on direct open.
-/*    /index.html   200
