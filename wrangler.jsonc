@@ -19,7 +19,7 @@
      no hashes and no SESSION_SECRET to handle manually.
 
   "d1_databases": [
-    { "binding": "DB", "database_name": "printopia", "database_id": "PASTE_YOUR_D1_DATABASE_ID_HERE" }
+    { "binding": "DB", "database_name": "printopia", "database_id": "1c59fd72-1ce1-47c0-a6c6-96bfd93d57f4" }
   ]
   */
 }
