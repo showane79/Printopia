@@ -1,0 +1,31 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "printopia",
+  "compatibility_date": "2025-05-01",
+  "main": "src/worker.ts",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*"]
+  }
+  /*
+  ── D1 binding (required for the /admin panel) ─────────────────────────────
+  ROOT CAUSE NOTE: This Worker deploys from GitHub, so THIS FILE is the single
+  source of truth. A D1 binding added only in the Cloudflare dashboard is
+  OVERWRITTEN on the next Git deploy — that is why /admin/setup can say the
+  database is "not connected" even though you added DB in the dashboard.
+
+  To connect the database:
+  1) Cloudflare dashboard → Workers & Pages → D1 → open "printopia" → copy the
+     real "Database ID" (a UUID like xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx).
+  2) Uncomment the block below and paste that EXACT id into database_id.
+     (A made-up or placeholder id fails deployment with code 10021.)
+  3) Commit. Cloudflare redeploys, env.DB becomes available at runtime, and
+     /admin/setup proceeds to the admin-account step.
+
+  "d1_databases": [
+    { "binding": "DB", "database_name": "printopia", "database_id": "PASTE_THE_REAL_DATABASE_ID_HERE" }
+  ]
+  */
+}

@@ -1,0 +1,526 @@
+@import "tailwindcss";
+
+/* ============================================================
+   PRINTOPIA — Design System tokens (Tailwind v4 @theme inline)
+   Semantic tokens resolve to CSS variables so the dark/light
+   theme can switch at runtime without rebuilding utilities.
+   ============================================================ */
+@theme inline {
+  --color-canvas: var(--c-canvas);
+  --color-surface: var(--c-surface);
+  --color-surface2: var(--c-surface2);
+  --color-line: var(--c-line);
+  --color-fg: var(--c-fg);
+  --color-muted: var(--c-muted);
+  --color-accent: var(--c-accent);
+  --color-accent2: var(--c-accent2);
+  --color-success: var(--c-success);
+  --color-warning: var(--c-warning);
+  --color-danger: var(--c-danger);
+
+  --font-sans: "Vazirmatn", "Segoe UI", Tahoma, system-ui, -apple-system, sans-serif;
+
+  --radius-card: 1.25rem;
+}
+
+/* ---------- Dark theme (default) ---------- */
+:root {
+  --c-canvas: #0b0d12;
+  --c-surface: #151923;
+  --c-surface2: #1c2230;
+  --c-line: #272e3e;
+  --c-fg: #f5f7fa;
+  --c-muted: #a8b0be;
+  --c-accent: #8b5cf6;
+  --c-accent2: #22d3ee;
+  --c-success: #22c55e;
+  --c-warning: #f59e0b;
+  --c-danger: #ef4444;
+
+  --shadow-soft: 0 18px 40px -22px rgba(0, 0, 0, 0.85);
+  --shadow-lift: 0 30px 60px -28px rgba(80, 40, 200, 0.55);
+  color-scheme: dark;
+}
+
+/* ---------- Light theme ---------- */
+:root.light {
+  --c-canvas: #f4f6fb;
+  --c-surface: #ffffff;
+  --c-surface2: #eef1f8;
+  --c-line: #e2e7f0;
+  --c-fg: #11151f;
+  --c-muted: #5b6477;
+  --c-accent: #7c3aed;
+  --c-accent2: #0891b2;
+  --c-success: #16a34a;
+  --c-warning: #d97706;
+  --c-danger: #dc2626;
+
+  --shadow-soft: 0 18px 40px -24px rgba(20, 30, 60, 0.25);
+  --shadow-lift: 0 30px 60px -30px rgba(124, 58, 237, 0.35);
+  color-scheme: light;
+}
+
+/* ============================================================
+   Base
+   ============================================================ */
+* {
+  border-color: var(--c-line);
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--c-canvas);
+  color: var(--c-fg);
+  font-family: "Vazirmatn", "Segoe UI", Tahoma, system-ui, -apple-system, sans-serif;
+  font-feature-settings: "ss01";
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  /* subtle layered depth inspired by print layers */
+  background-image:
+    radial-gradient(900px 500px at 88% -8%, rgba(139, 92, 246, 0.14), transparent 60%),
+    radial-gradient(700px 480px at 4% 4%, rgba(34, 211, 238, 0.09), transparent 55%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+:root.light body {
+  background-image:
+    radial-gradient(900px 500px at 88% -8%, rgba(124, 58, 237, 0.1), transparent 60%),
+    radial-gradient(700px 480px at 4% 4%, rgba(8, 145, 178, 0.07), transparent 55%);
+}
+
+h1, h2, h3, h4 {
+  line-height: 1.3;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--c-accent) 35%, transparent);
+  color: var(--c-fg);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+}
+::-webkit-scrollbar-track {
+  background: var(--c-canvas);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--c-surface2);
+  border-radius: 999px;
+  border: 3px solid var(--c-canvas);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--c-accent);
+}
+
+/* ============================================================
+   Focus & a11y
+   ============================================================ */
+:focus-visible {
+  outline: 2px solid var(--c-accent2);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.skip-link {
+  position: absolute;
+  inset-inline-start: 1rem;
+  top: -64px;
+  z-index: 100;
+  padding: 0.6rem 1rem;
+  background: var(--c-accent);
+  color: #fff;
+  border-radius: 0.75rem;
+  transition: top 0.2s ease;
+}
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* ============================================================
+   Component primitives
+   ============================================================ */
+@layer components {
+  .container-x {
+    width: 100%;
+    margin-inline: auto;
+    padding-inline: 1rem;
+    max-width: 80rem;
+  }
+  @media (min-width: 768px) {
+    .container-x { padding-inline: 1.5rem; }
+  }
+
+  .card {
+    background-color: var(--c-surface);
+    border: 1px solid var(--c-line);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .glass {
+    background-color: color-mix(in srgb, var(--c-surface) 72%, transparent);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border: 1px solid color-mix(in srgb, var(--c-line) 80%, transparent);
+  }
+
+  .text-gradient {
+    background: linear-gradient(100deg, var(--c-accent), var(--c-accent2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    border-radius: 0.9rem;
+    padding: 0.7rem 1.25rem;
+    line-height: 1;
+    cursor: pointer;
+    user-select: none;
+    border: 1px solid transparent;
+    transition: transform 0.18s ease, box-shadow 0.25s ease, background-color 0.2s ease,
+      border-color 0.2s ease, color 0.2s ease, filter 0.2s ease;
+    white-space: nowrap;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--c-accent), #6d28d9);
+    color: #fff;
+    box-shadow: 0 14px 30px -14px rgba(139, 92, 246, 0.8);
+  }
+  .btn-primary:hover:not(:disabled) {
+    filter: brightness(1.08);
+    box-shadow: 0 20px 40px -16px rgba(139, 92, 246, 0.95);
+    transform: translateY(-2px);
+  }
+
+  .btn-accent2 {
+    background: linear-gradient(135deg, var(--c-accent2), #0e7490);
+    color: #04141a;
+    box-shadow: 0 14px 30px -14px rgba(34, 211, 238, 0.7);
+  }
+  .btn-accent2:hover:not(:disabled) { filter: brightness(1.06); transform: translateY(-2px); }
+
+  .btn-secondary {
+    background: var(--c-surface2);
+    color: var(--c-fg);
+    border-color: var(--c-line);
+  }
+  .btn-secondary:hover:not(:disabled) { border-color: var(--c-accent); transform: translateY(-2px); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--c-fg);
+  }
+  .btn-ghost:hover:not(:disabled) { background: var(--c-surface2); }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    border: 1px solid var(--c-line);
+    background: color-mix(in srgb, var(--c-surface2) 80%, transparent);
+    color: var(--c-muted);
+    white-space: nowrap;
+  }
+
+  .input {
+    width: 100%;
+    background: var(--c-surface2);
+    border: 1px solid var(--c-line);
+    border-radius: 0.85rem;
+    padding: 0.7rem 0.9rem;
+    color: var(--c-fg);
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .input::placeholder { color: var(--c-muted); opacity: 0.8; }
+  .input:focus {
+    outline: none;
+    border-color: var(--c-accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--c-accent) 28%, transparent);
+  }
+
+  .nav-link {
+    position: relative;
+    padding: 0.4rem 0.2rem;
+    color: var(--c-muted);
+    font-weight: 600;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+  }
+  .nav-link:hover { color: var(--c-fg); }
+  .nav-link[aria-current="page"] { color: var(--c-fg); }
+  .nav-link[aria-current="page"]::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    bottom: -4px;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--c-accent), var(--c-accent2));
+  }
+}
+
+/* ============================================================
+   Utilities / animations
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.layer-grid {
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--c-line) 55%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--c-line) 55%, transparent) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--c-surface2);
+}
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--c-fg) 8%, transparent),
+    transparent
+  );
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
+}
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* ============================================================
+   Reduced motion
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ============================================================
+   Overlay / panel entrance animations
+   ============================================================ */
+@keyframes overlayIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes popIn {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes slideStart {
+  from { transform: translateX(100%); }
+  to { transform: none; }
+}
+@keyframes slideEnd {
+  from { transform: translateX(-100%); }
+  to { transform: none; }
+}
+
+.anim-overlay { animation: overlayIn 0.2s ease both; }
+.anim-pop { animation: popIn 0.24s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.anim-slide-start { animation: slideStart 0.28s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.anim-slide-end { animation: slideEnd 0.28s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* ============================================================
+   Mobile-first hardening
+   ============================================================ */
+html {
+  /* Recalibrated after promo-bar removal: header is ~68px desktop / ~56px mobile. */
+  scroll-padding-top: 4.75rem;
+}
+
+body {
+  /* Persian words must never break in the middle. `anywhere` was the cause of
+     letter-level splitting (e.g. "داشبورد" breaking). Use normal wrapping so
+     text breaks only at spaces, and keep latin tokens breakable last-resort. */
+  word-break: normal;
+  overflow-wrap: normal;
+  text-wrap: pretty;
+  -webkit-tap-highlight-color: transparent;
+  /* Final horizontal-overflow guard (root causes are fixed above; this is a safety net).
+     `clip` does not create a scroll container, so it does not break the sticky header. */
+  overflow-x: hidden;
+  overflow-x: clip;
+  max-width: 100%;
+}
+html {
+  max-width: 100%;
+}
+#root {
+  max-width: 100%;
+  min-width: 0;
+}
+h1, h2, h3, h4 {
+  text-wrap: balance;
+}
+
+/* media never creates horizontal scroll */
+img,
+video,
+svg,
+canvas {
+  max-width: 100%;
+}
+
+:root {
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+}
+
+/* (promo bar removed — no reserved height or offset remains) */
+
+/* prevent flex/grid blowout causing horizontal scroll */
+.minw-0 {
+  min-width: 0;
+}
+
+/* 44x44 minimum touch target baseline */
+.touch {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* fixed mobile bottom action bar (respects safe areas) */
+.bottom-bar {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 60;
+  padding-bottom: var(--safe-bottom);
+  padding-inline: var(--safe-left) var(--safe-right);
+}
+
+/* fluid hero heading */
+.h-hero {
+  font-size: clamp(1.7rem, 7.2vw, 3.25rem);
+  line-height: 1.2;
+}
+
+/* ============================================================
+   Centralized z-index layering tokens (no magic numbers in JSX)
+   ============================================================ */
+:root {
+  --z-header: 50;
+  --z-popover: 40;
+  --z-bottom-bar: 60;
+  --z-backdrop: 100;
+  --z-dialog: 110;
+  --z-toast: 120;
+}
+.bottom-bar { z-index: var(--z-bottom-bar); }
+/* Backdrop and dialog panel are decoupled, fixed siblings with explicit,
+   well-separated layers so the panel is always above the backdrop and links
+   always receive pointer events. */
+.layer-backdrop { z-index: var(--z-backdrop); pointer-events: auto; }
+.layer-dialog { z-index: var(--z-dialog); pointer-events: auto; }
+.layer-dialog a,
+.layer-dialog button,
+.layer-dialog input,
+.layer-dialog select,
+.layer-dialog textarea { pointer-events: auto; }
+.layer-overlay { z-index: var(--z-dialog); }
+.layer-toast { z-index: var(--z-toast); }
+
+/* ============================================================
+   Global overlay backdrop — opaque enough to suppress background
+   content; light blur kept performance-friendly.
+   ============================================================ */
+.overlay-backdrop {
+  background: rgba(6, 8, 14, 0.82);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+:root.light .overlay-backdrop {
+  background: rgba(8, 12, 22, 0.78);
+}
+
+/* horizontally scrollable region with hidden scrollbar (tabs, chips) */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.tab-scroll {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+}
+.tab-scroll > * {
+  scroll-snap-align: start;
+}
