@@ -1,0 +1,25 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "printopia",
+  "compatibility_date": "2025-05-01",
+  "main": "src/worker.ts",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*"]
+  }
+  /*
+  ── To enable the admin panel, create ONE D1 database and bind it as "DB" ──
+  1) Cloudflare dashboard → Workers & Pages → D1 → Create database
+     (name it, e.g. "printopia")
+  2) Copy the database's "Database ID".
+  3) Uncomment the block below and paste the ID, then commit so Cloudflare
+     redeploys. After this, open  /admin/setup  and just choose a password —
+     no hashes and no SESSION_SECRET to handle manually.
+
+  "d1_databases": [
+    { "binding": "DB", "database_name": "printopia", "database_id": "PASTE_YOUR_D1_DATABASE_ID_HERE" }
+  ]
+  */
+}
